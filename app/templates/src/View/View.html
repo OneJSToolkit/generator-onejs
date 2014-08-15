@@ -1,0 +1,20 @@
+<js-view js-type="<%= viewName %>" js-baseType="<%= viewName %>Base" js-model="<%= viewName %>Model" js-css="<%= viewName %>.css">
+    <div class="c-<%= viewName %>">
+
+        <p>Example of 2-way binding. Type in the text box, see stuff update below:</p>
+        <input type="text" class="inputBox" js-bind="value:exampleMessage" js-userAction="keydown:onChange"/>
+
+        <p>You've typed this value:<b js-bind="text:exampleMessage"></b></p>
+
+        <p>Example of class toggling. Click <button js-userAction="click:$toggle(isKittenVisible)">this button</button> to toggle the pane visibility below.</p>
+        <div class="kitten" js-bind="className.isVisible:isKittenVisible">
+            <img src="http://lorempixel.com/100/100/cats"/>
+        </div>
+
+        <p>Example of repeating. Note the array "names" in the viewmodel. Here it is in list format:</p>
+        <ul js-repeat="name in names">
+            <li js-bind="text:name"></li>
+        </ul>
+
+    </div>
+</js-view>
