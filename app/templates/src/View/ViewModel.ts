@@ -1,14 +1,20 @@
 import ViewModel = require('ViewModel');
+import List = require('List');
 
 class <%= viewName %>Model extends ViewModel {
     exampleMessage = "This is the exampleMessage value in <%= viewName %>Model.ts.";
     isKittenVisible = true;
-    names = [ 'Bob', 'Sue', 'Joe', 'Jane' ];
+    names = new List([ 'Bob', 'Sue', 'Joe', 'Jane' ]);
+    amount = '0';
 
-    onChange(ev) {
-        this.exampleMessage = ev.srcElement.getAttribute('value');
-        this.change();
+    amountTimesThree() {
+        return String(Number(this.amount) * 3);
     }
+
+    addMessage() {
+        this.names.push(this.exampleMessage);
+    }
+
 }
 
 export = <%= viewName %>Model;

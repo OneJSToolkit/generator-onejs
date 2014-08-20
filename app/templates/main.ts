@@ -21,6 +21,6 @@ function initialize() {
         app.resize();
     });
 
-    body.innerHTML = app.renderHtml();
+    body.appendChild(app.renderElement());
     app.activate();
 }
