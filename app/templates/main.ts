@@ -12,12 +12,12 @@ function initialize() {
     var body = document.body;
 
     // Wire up dispose on unload.
-    body.addEventListener('dispose', function() {
+    window.addEventListener('unload', function() {
         app.dispose();
     });
 
     // Wire up resize on window resize.
-    body.addEventListener('resize', function() {
+    window.addEventListener('resize', function() {
         app.resize();
     });
 
