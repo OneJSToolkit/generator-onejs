@@ -31,10 +31,6 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
         this.copy('gitattributes', '.gitattributes');
     },
 
-    bower: function() {
-        this.template('_bower.json', 'bower.json');
-    },
-
     package: function() {
         this.template('_package.json', 'package.json');
     },
@@ -59,14 +55,14 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
 
         this.mkdir(viewPath);
         this.template('src/View/View.html', viewPath + '/' + this.viewName + '.html');
-        this.template('src/View/View.less', viewPath +'/' + this.viewName + '.less');
-        this.template('src/View/ViewBase.ts', viewPath +'/' + this.viewName + 'Base.ts');
+        this.template('src/View/View.less', viewPath + '/' + this.viewName + '.less');
+        this.template('src/View/ViewBase.ts', viewPath + '/' + this.viewName + 'Base.ts');
         this.template('src/View/ViewModel.ts', viewPath + '/' + this.viewName + 'Model.ts');
     },
 
     install: function() {
         var howToInstall =
-            '\nAfter running `npm install & bower install`, inject your front end dependencies into' +
+            '\nAfter running `npm install install`, inject your front end dependencies into' +
             '\nyour HTML by running:' +
             '\n' +
             chalk.yellow.bold('\n  gulp wiredep');
@@ -77,32 +73,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
         }
         var done = this.async();
 
-        this.installDependencies({
-            skipMessage: this.options['skip-install-message'],
-            skipInstall: this.options['skip-install'],
-            callback: function() {
-                var bowerJson = JSON.parse(fs.readFileSync('./bower.json'));
-
-                // wire Bower packages to .html
-                wiredep({
-                    bowerJson: bowerJson,
-                    directory: 'bower_components',
-                    exclude: ['bootstrap-sass'],
-                    src: 'app/index.html'
-                });
-
-                if (this.includeSass) {
-                    // wire Bower packages to .scss
-                    wiredep({
-                        bowerJson: bowerJson,
-                        directory: 'bower_components',
-                        src: 'app/styles/*.scss'
-                    });
-                }
-
-                done();
-            }.bind(this)
-        });
+        this.npmInstall(null, null, done);
     }
 });
 

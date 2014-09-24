@@ -1,27 +1,25 @@
-<js-view js-type="<%= viewName %>" js-baseType="<%= viewName %>Base" js-model="<%= viewName %>Model" js-css="<%= viewName %>.css">
-    <div class="c-<%= viewName %>">
+<div class="<%= viewName %>" js-type="<%= viewName %>" js-baseType="<%= viewName %>Base" js-model="<%= viewName %>Model" js-css="<%= viewName %>.css">
 
-        <p>Example of 2-way binding. Type in the text box, see stuff update below:</p>
-        <input type="text" class="inputBox" js-bind="value:exampleMessage" />
-        <input type="text" class="inputBox" js-bind="value:exampleMessage" />
+    <p>Example of 2-way binding. Type in the text box, see stuff update below:</p>
+    <input type="text" class="inputBox" js-bind="value:exampleMessage" />
+    <input type="text" class="inputBox" js-bind="value:exampleMessage" />
 
-        <p>You've typed this value:<b js-bind="text:exampleMessage"></b></p>
+    <p>You've typed this value:<b js-bind="text:exampleMessage"></b></p>
 
-        <input type="range" class="inputBox" js-bind="value:amount" min="0" max="100"  />
-        <p>You've selected this value:<b js-bind="text:amount"></b></p>
-        <p>Here's that value times 3:<b js-bind="text:amountTimesThree"></b></p>
+    <input type="range" class="inputBox" js-bind="value:amount" min="0" max="100"  />
+    <p>You've selected this value:<b js-bind="text:amount"></b></p>
+    <p>Here's that value times 3:<b js-bind="text:amountTimesThree"></b></p>
 
-        <p>Example of class toggling. Click <button js-userAction="click:$view.toggle('isKittenVisible')">this button</button> to toggle the pane visibility below.</p>
-        <div class="kitten" js-bind="className.isVisible:isKittenVisible">
-            <img src="http://lorempixel.com/100/100/cats"/>
-        </div>
-
-        <p>Example of repeating. Note the array "names" in the viewmodel. Here it is in list format:</p>
-        <ul js-repeat="name in names">
-            <li>
-                <span js-bind="text:name"></span>
-            </li>
-        </ul>
-        <button js-userAction="click:addMessage">Add the exampleMessage to the list.</button>
+    <p>Example of class toggling. Click <button js-userAction="click:$view.toggle('isKittenVisible')">this button</button> to toggle the pane visibility below.</p>
+    <div class="kitten" js-bind="className.isVisible:isKittenVisible">
+        <img src="http://lorempixel.com/100/100/cats"/>
     </div>
-</js-view>
+
+    <p>Example of repeating. Note the array "names" in the viewmodel. Here it is in list format:</p>
+    <ul js-repeat="name in names">
+        <li>
+            <span js-bind="text:name"></span>
+        </li>
+    </ul>
+    <button js-userAction="click:addMessage">Add the exampleMessage to the list.</button>
+</div>

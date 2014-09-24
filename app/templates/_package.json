@@ -4,23 +4,24 @@
         "node": ">=0.10.0"
     },
     "dependencies": {
-        "onejs": "^1.1.0"
+        "onejs": "^1.1.43",
+        "requirejs": "^2.1.15"
     },
     "devDependencies": {
         "gulp": "^3.8.6",
-        "gulp-tsc": "^0.9.2",
-        "typescript": "^1.0.1",
-        "gulp-onejs-compiler": "^1.1.0",
-        "gulp-clean": "^0.3.1",
-        "requirejs": "^2.1.14",
-        "gulp-flatten": "0.0.2",
-        "gulp-uglifyjs": "^0.4.2",
         "gulp-add": "0.0.1",
         "gulp-add-src": "^0.1.1",
+        "gulp-csstojs": "^1.0.1",
+        "gulp-filter": "^0.5.1",
+        "gulp-flatten": "0.0.2",
         "gulp-less": "^1.3.2",
-        "gulp-filter": "^0.5.0",
-        "gulp-size": "^1.0.0",
         "gulp-minify-css": "^0.3.7",
-        "gulp-csstojs": "^1.0.1"
+        "gulp-onejs-compiler": "^1.1.0",
+        "gulp-rimraf": "^0.1.0",
+        "gulp-size": "^1.0.0",
+        "gulp-tsc": "^0.9.2",
+        "gulp-uglifyjs": "^0.4.2",
+        "requirejs": "^2.1.14",
+        "typescript": "^1.0.1"
     }
 }
