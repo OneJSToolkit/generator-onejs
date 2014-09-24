@@ -6,7 +6,7 @@ class <%= viewName %>Model extends ViewModel {
     /// View model class for defining the observable data contract for the <%= viewName%> view.
     /// 
     /// This class is optional and can be removed if unnecessary. Remove the
-    /// js-model attribute from the template's root element if you do.
+    /// js-model attribute from the <%= viewName%>.html template's root element if you do.
     /// </summary>
 
     exampleMessage = "This is the exampleMessage value in <%= viewName %>Model.ts.";
