@@ -1,4 +1,4 @@
-import AppRoot = require('AppRoot');
+import AppRoot = require('AppRoot/AppRoot');
 
 if (document.body) {
     initialize();

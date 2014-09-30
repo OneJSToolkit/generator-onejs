@@ -1,4 +1,4 @@
-import ViewModel = require('ViewModel');
+import ViewModel = require('../onejs/ViewModel');
 
 class AppRootModel extends ViewModel {
 

@@ -1,4 +1,4 @@
-import View = require('View');
+import View = require('../onejs/View');
 
 class <%= viewName %>Base extends View {
 	/// <summary>

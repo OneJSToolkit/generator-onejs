@@ -1,5 +1,5 @@
-import ViewModel = require('ViewModel');
-import List = require('List');
+import ViewModel = require('../onejs/ViewModel');
+import List = require('../onejs/List');
 
 class <%= viewName %>Model extends ViewModel {
     /// <summary>
