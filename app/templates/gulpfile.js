@@ -48,7 +48,7 @@ gulp.task('copy-deps', ['clean'], function() {
 gulp.task('tsc-preprocess', ['copy-deps'], function() {
     var lessFilter = filter('**/*.less');
 
-    return gulp.src(['node_modules/onejs-compiler/src/**/*', 'node_modules/onejs/src/**/*', 'src/**/*'])
+    return gulp.src(['src/**/*'])
         .pipe(lessFilter)
         .pipe(less())
         .pipe(cssMinify())
