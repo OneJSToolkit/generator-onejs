@@ -39,7 +39,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
         }.bind(this));
     },
 
-    app: function() {
+    writeTask: function() {
         var viewPath = 'src/' + this.viewName;
         this.mkdir(viewPath);
 
