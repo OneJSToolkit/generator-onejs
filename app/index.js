@@ -44,30 +44,42 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
         this.mkdir(viewPath);
 
         if (this.selectedType === this.generatorTypes[0]) {
+            var srcPath = 'src/Control/src/';
+            var destPath = viewPath + '/';
+
             // Template and copy over the source files
-            this.template('src/Control/src/_Control.html', viewPath + '/' + this.viewName + '.html');
-            this.template('src/Control/src/_Control.less', viewPath + '/' + this.viewName + '.less');
-            this.template('src/Control/src/_ControlBase.ts', viewPath + '/' + this.viewName + 'Base.ts');
-            this.template('src/Control/src/_ControlModel.ts', viewPath + '/' + this.viewName + 'Model.ts');
+            this.template(srcPath + '_Control.html', destPath + this.viewName + '.html');
+            this.template(srcPath + '_Control.less', destPath + this.viewName + '.less');
+            this.template(srcPath + '_ControlBase.ts', destPath + this.viewName + 'Base.ts');
+            this.template(srcPath + '_ControlModel.ts', destPath + this.viewName + 'Model.ts');
+
+            srcPath = 'src/Control/test/';
+            destPath = 'test/';
 
             // Template and copy over the test stub file
-            this.template('src/Control/test/_Control.test.ts', 'test/' + this.viewName + '.test.ts');
+            this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
         } else if (this.selectedType === this.generatorTypes[1]) {
             this.copy('index.html');
             this.mkdir('src');
 
             this.copy('main.ts', 'src/main.ts');
 
-            this.mkdir('src/AppRoot');
-            this.template('src/AppRoot/AppRoot.html', 'src/AppRoot/AppRoot.html');
-            this.copy('src/AppRoot/AppRoot.less', 'src/AppRoot/AppRoot.less');
-            this.copy('src/AppRoot/AppRootBase.ts', 'src/AppRoot/AppRootBase.ts');
-            this.copy('src/AppRoot/AppRootModel.ts', 'src/AppRoot/AppRootModel.ts');
+            var srcPath = 'src/AppRoot/';
+            var destPath = srcPath;
 
-            this.template('src/View/View.html', viewPath + '/' + this.viewName + '.html');
-            this.template('src/View/View.less', viewPath + '/' + this.viewName + '.less');
-            this.template('src/View/ViewBase.ts', viewPath + '/' + this.viewName + 'Base.ts');
-            this.template('src/View/ViewModel.ts', viewPath + '/' + this.viewName + 'Model.ts');
+            this.mkdir('src/AppRoot');
+            this.template(srcPath + 'AppRoot.html', destPath + 'AppRoot.html');
+            this.copy(srcPath + 'AppRoot.less', destPath + 'AppRoot.less');
+            this.copy(srcPath + 'AppRootBase.ts', destPath + 'AppRootBase.ts');
+            this.copy(srcPath + 'AppRootModel.ts', destPath + 'AppRootModel.ts');
+
+            srcPath = 'src/View/';
+            destPath = viewPath + '/';
+
+            this.template(srcPath + 'View.html', destPath + this.viewName + '.html');
+            this.template(srcPath + 'View.less', destPath + this.viewName + '.less');
+            this.template(srcPath + 'ViewBase.ts', destPath + this.viewName + 'Base.ts');
+            this.template(srcPath + 'ViewModel.ts', destPath + this.viewName + 'Model.ts');
 
             gulpfile.apply(this);
             git.apply(this);
@@ -78,7 +90,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
     }
 });
 
-function _toCamelCase(val) {
+var _toCamelCase = function(val) {
     val = val || '';
 
     val = val[0].toLowerCase() + val.substr(1);
