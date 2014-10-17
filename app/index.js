@@ -41,7 +41,6 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
 
     writeTask: function() {
         var viewPath = 'src/' + this.viewName;
-        this.mkdir(viewPath);
 
         if (this.selectedType === this.generatorTypes[0]) {
             var srcPath = 'src/Control/src/';
@@ -60,14 +59,12 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
             this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
         } else if (this.selectedType === this.generatorTypes[1]) {
             this.copy('index.html');
-            this.mkdir('src');
 
             this.copy('main.ts', 'src/main.ts');
 
             var srcPath = 'src/App/AppRoot/';
-            var destPath = srcPath;
+            var destPath = 'src/AppRoot/';
 
-            this.mkdir('src/AppRoot');
             this.template(srcPath + '_AppRoot.html', destPath + 'AppRoot.html');
             this.copy(srcPath + '_AppRoot.less', destPath + 'AppRoot.less');
             this.copy(srcPath + '_AppRootBase.ts', destPath + 'AppRootBase.ts');
