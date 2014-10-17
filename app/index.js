@@ -6,7 +6,6 @@ var yosay = require('yosay');
 var AppGenerator = module.exports = yeoman.generators.Base.extend({
     constructor: function() {
         yeoman.generators.Base.apply(this, arguments);
-        this.option('coffee');
         this.generatorTypes = ['control', 'app'];
     },
 
@@ -19,9 +18,10 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
         ));
 
         var prompts = [{
-                type: 'input',
+                type: 'list',
                 name: 'generatorType',
-                message: 'What do you want to generate? Options are {' + this.generatorTypes.map(function(i) { return i; }) + '}',
+                choices: this.generatorTypes,
+                message: 'What do you want to generate?',
                 default: this.generatorTypes[0] // Default to a control
             }, {
                 type: 'input',
