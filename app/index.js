@@ -64,22 +64,22 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
 
             this.copy('main.ts', 'src/main.ts');
 
-            var srcPath = 'src/AppRoot/';
+            var srcPath = 'src/App/AppRoot/';
             var destPath = srcPath;
 
             this.mkdir('src/AppRoot');
-            this.template(srcPath + 'AppRoot.html', destPath + 'AppRoot.html');
-            this.copy(srcPath + 'AppRoot.less', destPath + 'AppRoot.less');
-            this.copy(srcPath + 'AppRootBase.ts', destPath + 'AppRootBase.ts');
-            this.copy(srcPath + 'AppRootModel.ts', destPath + 'AppRootModel.ts');
+            this.template(srcPath + '_AppRoot.html', destPath + 'AppRoot.html');
+            this.copy(srcPath + '_AppRoot.less', destPath + 'AppRoot.less');
+            this.copy(srcPath + '_AppRootBase.ts', destPath + 'AppRootBase.ts');
+            this.copy(srcPath + '_AppRootModel.ts', destPath + 'AppRootModel.ts');
 
-            srcPath = 'src/View/';
+            srcPath = 'src/App/View/';
             destPath = viewPath + '/';
 
-            this.template(srcPath + 'View.html', destPath + this.viewName + '.html');
-            this.template(srcPath + 'View.less', destPath + this.viewName + '.less');
-            this.template(srcPath + 'ViewBase.ts', destPath + this.viewName + 'Base.ts');
-            this.template(srcPath + 'ViewModel.ts', destPath + this.viewName + 'Model.ts');
+            this.template(srcPath + '_View.html', destPath + this.viewName + '.html');
+            this.template(srcPath + '_View.less', destPath + this.viewName + '.less');
+            this.template(srcPath + '_ViewBase.ts', destPath + this.viewName + 'Base.ts');
+            this.template(srcPath + '_ViewModel.ts', destPath + this.viewName + 'Model.ts');
 
             gulpfile.apply(this);
             git.apply(this);
