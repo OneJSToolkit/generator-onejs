@@ -3,10 +3,13 @@ var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
 
+// Some consts we'll use throughout the generator
+var c_control = 'control';
+var c_app = 'app';
+
 var AppGenerator = module.exports = yeoman.generators.Base.extend({
     constructor: function() {
         yeoman.generators.Base.apply(this, arguments);
-        this.generatorTypes = ['control', 'app'];
     },
 
     promptTask: function() {
@@ -17,22 +20,33 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
           'Welcome to the awesome OneJS generator!'
         ));
 
-        var prompts = [{
-                type: 'list',
-                name: 'generatorType',
-                choices: this.generatorTypes,
-                message: 'What do you want to generate?'
-            }, {
-                type: 'input',
-                name: 'name',
-                message: 'Your OneJS control name (e.g. FavoritesPane)',
-                default: this.appname // Default to current folder name
-            }
-        ];
+        // Will hold any prompts we may need to ask the user
+        var prompts = [];
+
+        // Take in some command line arguments, if they exist
+        // else, add the option to the prompts array.
+        if (this.options[c_control]) {
+            this.selectedType = c_control;
+        } else {
+            prompts.push(_prompts.generatorType);
+        }
+
+        if (this.options[c_app]) {
+            this.selectedType = c_app;
+        } else {
+            prompts.push(_prompts.generatorType);
+        }
+
+        if (this.options['name']) {
+            this.viewName = this.options['name'];
+            this.viewNameMember = _toCamelCase(this.viewName);
+        } else {
+            prompts.push(_prompts.name);
+        }
 
         this.prompt(prompts, function (props) {
-            this.selectedType = props.generatorType;
-            this.viewName = props.name;
+            this.selectedType = this.selectedType || props.generatorType;
+            this.viewName = this.viewName || props.name;
             this.viewNameMember = _toCamelCase(this.viewName);
             done();
         }.bind(this));
@@ -41,7 +55,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
     writeTask: function() {
         var viewPath = 'src/' + this.viewName;
 
-        if (this.selectedType === this.generatorTypes[0]) {
+        if (this.selectedType === c_control) {
             var srcPath = 'src/Control/src/';
             var destPath = viewPath + '/';
 
@@ -56,7 +70,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
 
             // Template and copy over the test stub file
             this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
-        } else if (this.selectedType === this.generatorTypes[1]) {
+        } else if (this.selectedType === c_app) {
             this.copy('index.html');
 
             this.copy('main.ts', 'src/main.ts');
@@ -82,9 +96,26 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
             editorConfig.apply(this);
             package.apply(this);
             install.apply(this);
+        } else {
+            this.log(chalk.red.bold('Error: ') + 'do not know how to generate type "' + this.selectedType + '".');
         }
     }
 });
+
+var _prompts = {
+    generatorType: {
+        type: 'list',
+        name: 'generatorType',
+        choices: [c_control, c_app],
+        message: 'What do you want to generate?'
+    },
+    name: {
+        type: 'input',
+        name: 'name',
+        message: 'Your OneJS control name (e.g. FavoritesPane)',
+        default: this.appname // Default to current folder name
+    }
+}
 
 var _toCamelCase = function(val) {
     val = val || '';
