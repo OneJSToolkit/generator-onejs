@@ -21,8 +21,7 @@ var AppGenerator = module.exports = yeoman.generators.Base.extend({
                 type: 'list',
                 name: 'generatorType',
                 choices: this.generatorTypes,
-                message: 'What do you want to generate?',
-                default: this.generatorTypes[0] // Default to a control
+                message: 'What do you want to generate?'
             }, {
                 type: 'input',
                 name: 'name',
@@ -117,7 +116,7 @@ var install = function() {
         '\nAfter running `npm install install`, inject your front end dependencies into' +
         '\nyour HTML by running:' +
         '\n' +
-        chalk.yellow.bold('\n  gulp wiredep');
+        chalk.yellow.bold('\n  gulp wiredep\n');
 
     if (this.options['skip-install']) {
         this.log(howToInstall);
