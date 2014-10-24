@@ -20,9 +20,10 @@ var paths = {
     staticFiles: ['node_modules/requirejs/require.js']
 };
 
-var amdDependencies = [
-    'onejs'
-];
+var copyPaths = {
+    'node_modules/onejs/dist/amd/**/*.d.ts': paths.tempPath + '/ts/onejs',
+    'node_modules/onejs/dist/amd/**/*.js': paths.appPath + '/onejs'
+};
 
 gulp.task('clean', function() {
     return gulp.src([paths.tempPath, paths.appPath, paths.appMinPath])
@@ -32,13 +33,11 @@ gulp.task('clean', function() {
 gulp.task('copy-deps', ['clean'], function() {
     var stream = mergeStream();
 
-    for (var i = 0; i < amdDependencies.length; i++) {
-        var dep = amdDependencies[i];
+    for (var path in copyPaths) {
 
         stream.add(
-            gulp.src('node_modules/' + dep + '/dist/amd/*')
-            .pipe(gulp.dest(paths.tempPath + '/ts/' + dep))
-            .pipe(gulp.dest(paths.appPath + '/' + dep))
+            gulp.src(path)
+            .pipe(gulp.dest(copyPaths[path]))
         );
     }
 
