@@ -12,6 +12,7 @@ var csstojs = require('gulp-csstojs');
 var filter = require('gulp-filter');
 var size = require('gulp-size');
 var mergeStream = require('merge-stream');
+var karma = require('karma').server;
 
 var paths = {
     tempPath: 'temp',
@@ -75,6 +76,28 @@ gulp.task('minify', ['tsc'], function() {
             gzip: true
         }))
         .pipe(gulp.dest(paths.appMinPath));
+});
+
+gulp.task('copy-dist', ['tsc-commonjs'], function() {
+    return gulp.src('dist/commonjs/*.js')
+        .pipe(gulp.dest('bin/src'));
+});
+
+gulp.task('tsc-test', ['clean-test', 'copy-dist'], function() {
+    var tsResult = gulp.src('test/*.ts')
+        .pipe(tsc({
+            module: 'commonjs',
+            target: 'ES5'
+        }));
+
+    return tsResult.js.pipe(gulp.dest('bin/test'));
+});
+
+gulp.task('test', ['tsc-test'], function (done) {
+    karma.start({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done);
 });
 
 gulp.task('copy-static-files', ['clean', 'tsc'], function() {
