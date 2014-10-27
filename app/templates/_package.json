@@ -1,4 +1,5 @@
 {
+    "description": "OneJS App generated with generator-onejs",
     "engines": {
         "node": ">=0.10.0"
     },

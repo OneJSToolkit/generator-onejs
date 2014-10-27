@@ -136,7 +136,7 @@ var _scaffold = {
 };
 
 var _gulpfile = function() {
-    this.template('_gulpfile.js');
+    this.template('_gulpfile.js', 'gulpfile.js');
 };
 
 var _git = function() {
@@ -154,6 +154,7 @@ var _editorConfig = function() {
 
 var _testing = function() {
     this.copy('src/App/_karma.conf.js', 'karma.conf.js');
+    this.copy('_test_index.ts', 'test/index.ts')
 };
 
 var _install = function() {

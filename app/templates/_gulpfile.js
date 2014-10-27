@@ -84,7 +84,8 @@ gulp.task('tsc-commonjs', ['tsc-preprocess'], function() {
             module: 'commonjs',
             target: esTarget
         }))
-        .pipe(gulp.dest(paths.appCommonJsPath));
+        .pipe(gulp.dest(paths.appCommonJsPath))
+        .pipe(gulp.dest(paths.testBinPath));
 });
 
 /** Minifies and gzips your application */
@@ -108,6 +109,7 @@ gulp.task('copy-deps', ['copy-dts'], function() {
             gulp.src('node_modules/' + dep + '/dist/amd/*')
             .pipe(gulp.dest(paths.tempPath + '/ts/' + dep))
             .pipe(gulp.dest(paths.appPath + '/' + dep))
+            .pipe(gulp.dest(paths.testBinPath + '/onejs'))
         );
     }
 
@@ -166,7 +168,7 @@ gulp.task('test', ['tsc-test'], function (done) {
 // karma blocks gulp from exiting without this
 gulp.doneCallback = function(err) {
     process.exit(err? 1: 0);
-}
+};
 
 /** Copies the static files required for your app */
 gulp.task('copy-static-files', function() {
