@@ -62,7 +62,7 @@ var _prompts = {
 var _processCommandLineArguments = function() {
     var prompts = [];
 
-    if (!(this.options[c_control] || this.options[c_app])) {
+    if (!(this.options[c_control] || this.options[c_app] || this.options[c_test_framework])) {
         prompts.push(_prompts.generatorType);
     }
 
@@ -74,11 +74,17 @@ var _processCommandLineArguments = function() {
         this.selectedType = c_app;
     }
 
+    if (this.options[c_test_framework]) {
+        this.selectedType = c_test_framework;
+    }
+
     if (this.options['name']) {
         this.viewName = this.options['name'];
         this.viewNameMember = _toCamelCase(this.viewName);
     } else {
-        prompts.push(_prompts.name);
+        if (!this.options[c_test_framework]) {
+            prompts.push(_prompts.name);
+        }
     }
     return prompts;
 };
