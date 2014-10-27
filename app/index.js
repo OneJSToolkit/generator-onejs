@@ -136,7 +136,7 @@ var _scaffold = {
 };
 
 var _gulpfile = function() {
-    this.template('gulpfile.js');
+    this.template('_gulpfile.js');
 };
 
 var _git = function() {
