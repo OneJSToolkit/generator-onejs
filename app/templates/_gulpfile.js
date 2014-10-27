@@ -28,9 +28,18 @@ var paths = {
 var esTarget = 'ES5';
 
 /** What dependencies we'll need to manually handle */
-var dependencies = [
-    'onejs',
-];
+var copyPaths = {
+    'node_modules/onejs/dist/amd/**/*.d.ts': [
+        paths.tempPath + '/ts/onejs',
+        paths.appPath + '/onejs',
+        paths.testBinPath + '/onejs'
+    ],
+    'node_modules/onejs/dist/amd/**/*.js': [
+        paths.tempPath + '/ts/onejs',
+        paths.appPath + '/onejs',
+        paths.testBinPath + '/onejs'
+    ]
+};
 
 /** Cleans both app and test output files */
 gulp.task('clean', ['clean-app', 'clean-test'], function() {
@@ -101,15 +110,13 @@ gulp.task('minify', ['tsc'], function() {
 gulp.task('copy-deps', ['copy-dts'], function() {
     var stream = mergeStream();
 
-    for (var i = 0; i < dependencies.length; i++) {
-        var dep = dependencies[i];
-
-        stream.add(
-            gulp.src('node_modules/' + dep + '/dist/amd/*')
-            .pipe(gulp.dest(paths.tempPath + '/ts/' + dep))
-            .pipe(gulp.dest(paths.appPath + '/' + dep))
-            .pipe(gulp.dest(paths.testBinPath + '/onejs'))
-        );
+    for (var paths in copyPaths) {
+        for (var path in copyPaths[paths]) {
+            stream.add(
+                gulp.src(paths)
+                .pipe(gulp.dest(copyPaths[paths][path]))
+            );
+        }
     }
 
     return stream;

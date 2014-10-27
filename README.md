@@ -16,8 +16,18 @@ You can use `yo onejs` to follow prompts to scaffold anything that we have a gen
 
 ## App
 
+Use this as a starting point for a brand new app. Scaffolds an app root, a controller with example data, and test framework.
+
 `yo onejs --app --name=MyAppName`
 
 ## Control
 
+Generates a the control source with the name passed in and a test stub.
+
 `yo onejs --control --name=FavoritesPane`
+
+## Test Framework
+
+Sets up a Karma test runner with Mocha and Chai library and a PhantomJS browser to run tests in. Already included in the app scaffolding, so only run this if you didn't use the app generator to create your project.
+
+`yo onejs --testFramework`
