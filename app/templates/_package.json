@@ -1,5 +1,4 @@
 {
-    "private": true,
     "engines": {
         "node": ">=0.10.0"
     },
@@ -19,13 +18,17 @@
         "gulp-minify-css": "^0.3.7",
         "gulp-onejs-compiler": "^1.1.5",
         "gulp-rimraf": "^0.1.0",
+        "gulp-shell": "^0.2.10",
         "gulp-size": "^1.0.0",
         "gulp-typescript": "^2.0.0",
         "gulp-uglifyjs": "^0.4.2",
         "karma": "^0.12.24",
         "karma-mocha": "^0.1.9",
+        "karma-chrome-launcher": "^0.1.5",
+        "karma-phantomjs-launcher": "^0.1.4",
         "merge-stream": "^0.1.6",
         "mocha": "^2.0.1",
+        "tsd": "^0.5.7",
         "typescript": "^1.0.1"
     }
 }
