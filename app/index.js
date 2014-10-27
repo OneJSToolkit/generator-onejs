@@ -113,11 +113,8 @@ var _scaffold = {
         this.template(srcPath + '_ControlBase.ts', destPath + this.viewName + 'Base.ts');
         this.template(srcPath + '_ControlModel.ts', destPath + this.viewName + 'Model.ts');
 
-        srcPath = 'src/Control/test/';
-        destPath = 'test/';
-
         // Template and copy over the test stub file
-        this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
+        _testStub.apply(this);
     },
     app: function() {
         this.copy('_index.html', 'index.html');
@@ -141,15 +138,18 @@ var _scaffold = {
         this.template(srcPath + '_ViewBase.ts', destPath + this.viewName + 'Base.ts');
         this.template(srcPath + '_ViewModel.ts', destPath + this.viewName + 'Model.ts');
 
+        // Template and copy over the test stub file
+        _testStub.apply(this);
+
         _gulpfile.apply(this);
         _git.apply(this);
         _package.apply(this);
         _editorConfig.apply(this);
-        _testing.apply(this);
+        _testFramework.apply(this);
         _install.apply(this);
     },
     testFramework: function() {
-        _testing.apply(this);
+        _testFramework.apply(this);
     },
 };
 
@@ -170,7 +170,7 @@ var _editorConfig = function() {
     this.copy('_editorconfig', '.editorconfig');
 };
 
-var _testing = function() {
+var _testFramework = function() {
     var srcPath = 'src/TestFramework/';
     this.copy(srcPath + '_karma.conf.js', 'karma.conf.js');
     this.copy('_test_index.ts', 'test/index.ts');
@@ -178,6 +178,14 @@ var _testing = function() {
     this.copy(srcPath + 'typings/mocha/mocha.d.ts', 'typings/mocha/mocha.d.ts');
     this.copy(srcPath + 'typings/tsd.d.ts', 'typings/tsd.d.ts');
 };
+
+var _testStub = function() {
+    srcPath = 'src/Control/test/';
+    destPath = 'test/';
+
+    // Template and copy over the test stub file
+    this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
+}
 
 var _install = function() {
     var howToInstall =
