@@ -150,7 +150,7 @@ gulp.task('tsc-test', ['tsc-commonjs', 'test-preprocess'], function() {
 });
 
 /** Copies the test files to the temp path */
-gulp.task('test-preprocess', function() {
+gulp.task('test-preprocess', ['copy-static-test-files'], function() {
     return gulp.src(['test/*.ts'])
         .pipe(gulp.dest(paths.tempPath + '/ts/test'));
 });
@@ -163,12 +163,23 @@ gulp.task('test', ['tsc-test'], function (done) {
     }, done);
 });
 
+// karma blocks gulp from exiting without this
+gulp.doneCallback = function(err) {
+    process.exit(err? 1: 0);
+}
+
 /** Copies the static files required for your app */
-gulp.task('copy-static-files', ['tsc'], function() {
+gulp.task('copy-static-files', function() {
     return gulp.src(paths.staticFiles)
         .pipe(gulp.dest(paths.appPath))
         .pipe(uglify())
         .pipe(gulp.dest(paths.appMinPath));
+});
+
+/** Copies the static files required for your app */
+gulp.task('copy-static-test-files', function() {
+    return gulp.src(paths.staticFiles)
+        .pipe(gulp.dest(paths.testBinPath));
 });
 
 gulp.task('serve', ['default'], function() {
