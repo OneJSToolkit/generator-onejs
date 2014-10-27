@@ -1,6 +1,6 @@
 {
     "name": "generator-onejs",
-    "version": "1.1.52",
+    "version": "1.1.55",
     "description": "OneJS Project Generator",
     "main": "index.js",
     "scripts": {
@@ -9,7 +9,6 @@
     "keywords": [
         "yeoman-generator"
     ],
-    "author": "David Zearing",
     "license": "MIT",
     "dependencies": {
         "yeoman-generator": "^0.17.2",
