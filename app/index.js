@@ -105,9 +105,9 @@ var _scaffold = {
         this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
     },
     app: function() {
-        this.copy('index.html');
+        this.copy('_index.html', 'index.html');
 
-        this.copy('main.ts', 'src/main.ts');
+        this.copy('_main.ts', 'src/main.ts');
 
         var viewPath = 'src/' + this.viewName;
         var srcPath = 'src/App/AppRoot/';
@@ -126,15 +126,11 @@ var _scaffold = {
         this.template(srcPath + '_ViewBase.ts', destPath + this.viewName + 'Base.ts');
         this.template(srcPath + '_ViewModel.ts', destPath + this.viewName + 'Model.ts');
 
-        // Copy the karma testing setup
-        var srcPath = 'src/App/';
-        var destPath = '/';
-        this.copy(srcPath + '_karma.conf.js', 'karma.conf.js');
-
         _gulpfile.apply(this);
         _git.apply(this);
         _package.apply(this);
         _editorConfig.apply(this);
+        _testing.apply(this);
         _install.apply(this);
     },
 };
@@ -144,8 +140,8 @@ var _gulpfile = function() {
 };
 
 var _git = function() {
-    this.copy('gitignore', '.gitignore');
-    this.copy('gitattributes', '.gitattributes');
+    this.copy('_gitignore', '.gitignore');
+    this.copy('_gitattributes', '.gitattributes');
 };
 
 var _package = function() {
@@ -153,7 +149,11 @@ var _package = function() {
 };
 
 var _editorConfig = function() {
-    this.copy('editorconfig', '.editorconfig');
+    this.copy('_editorconfig', '.editorconfig');
+};
+
+var _testing = function() {
+    this.copy('src/App/_karma.conf.js', 'karma.conf.js');
 };
 
 var _install = function() {
