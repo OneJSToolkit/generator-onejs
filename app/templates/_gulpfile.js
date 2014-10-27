@@ -12,7 +12,6 @@ var filter = require('gulp-filter');
 var size = require('gulp-size');
 var mergeStream = require('merge-stream');
 var karma = require('karma').server;
-var shell = require('gulp-shell');
 
 /** The paths we'll be using for our build system */
 var paths = {
@@ -116,18 +115,6 @@ gulp.task('copy-deps', ['copy-dts'], function() {
     return stream;
 });
 
-/** Fetches the latest typings from the DefinitelyTyped repo */
-gulp.task('fetch-dts', function() {
-    var tsdPath = './node_modules/tsd/build/cli.js ';
-    var dtsToFetch = ['chai', 'mocha']
-    var shellCommands = dtsToFetch.map(function(i) {
-        return tsdPath + 'query --action install ' + i + ' --save';
-    });
-
-    return gulp.src('package.json', {read: false})
-        .pipe(shell(shellCommands));
-});
-
 /** Copies the distributable js files of your app into the bin folder */
 gulp.task('copy-dist', ['tsc-commonjs'], function() {
     return gulp.src(paths.appCommonJsPath + '/*.js')
@@ -137,7 +124,8 @@ gulp.task('copy-dist', ['tsc-commonjs'], function() {
 /** Copies the .d.ts files to the temp folder */
 gulp.task('copy-dts', function() {
     return gulp.src('typings/**/*.d.ts')
-        .pipe(gulp.dest(paths.tempPath + '/ts/typings'));
+        .pipe(gulp.dest(paths.tempPath + '/ts/typings'))
+        .pipe(gulp.dest(paths.testBinPath + '/typings'));
 });
 
 /** Builds source and test files */

@@ -6,6 +6,7 @@ var yosay = require('yosay');
 // Some consts we'll use throughout the generator
 var c_control = 'control';
 var c_app = 'app';
+var c_test_framework = 'testFramework';
 
 var AppGenerator = module.exports = yeoman.generators.Base.extend({
     constructor: function() {
@@ -43,14 +44,18 @@ var _prompts = {
     generatorType: {
         type: 'list',
         name: 'generatorType',
-        choices: [c_control, c_app],
+        choices: [c_control, c_app, c_test_framework],
         message: 'What do you want to generate?'
     },
     name: {
         type: 'input',
         name: 'name',
         message: 'Your OneJS control name (e.g. FavoritesPane)',
-        default: this.appname // Default to current folder name
+        default: this.appname, // Default to current folder name
+        when: function(answers) {
+            // Do not prompt for a name if we're generating a test framework
+            return answers.generatorType !== c_test_framework;
+        }
     }
 };
 
@@ -80,6 +85,10 @@ var _processCommandLineArguments = function() {
 
 var _toCamelCase = function(val) {
     val = val || '';
+
+    if (!val) {
+        return;
+    }
 
     val = val[0].toLowerCase() + val.substr(1);
 
@@ -133,6 +142,9 @@ var _scaffold = {
         _testing.apply(this);
         _install.apply(this);
     },
+    testFramework: function() {
+        _testing.apply(this);
+    },
 };
 
 var _gulpfile = function() {
@@ -153,8 +165,12 @@ var _editorConfig = function() {
 };
 
 var _testing = function() {
-    this.copy('src/App/_karma.conf.js', 'karma.conf.js');
-    this.copy('_test_index.ts', 'test/index.ts')
+    var srcPath = 'src/TestFramework/';
+    this.copy(srcPath + '_karma.conf.js', 'karma.conf.js');
+    this.copy('_test_index.ts', 'test/index.ts');
+    this.copy(srcPath + 'typings/chai/chai.d.ts', 'typings/chai/chai.d.ts');
+    this.copy(srcPath + 'typings/mocha/mocha.d.ts', 'typings/mocha/mocha.d.ts');
+    this.copy(srcPath + 'typings/tsd.d.ts', 'typings/tsd.d.ts');
 };
 
 var _install = function() {
