@@ -17,11 +17,9 @@ var karma = require('karma').server;
 var paths = {
     tempPath: 'temp',
     appPath: 'app',
-    appAmdPath: 'app/amd',
-    appCommonJsPath: 'app/commonjs',
     appMinPath: 'app-min',
     staticFiles: ['node_modules/requirejs/require.js'],
-    testBinPath: 'bin'
+    testPath: 'temp/test'
 };
 
 /** What standard of ECMAScript we will target for TypeScript compilation */
@@ -32,12 +30,12 @@ var copyPaths = {
     'node_modules/onejs/dist/amd/**/*.d.ts': [
         paths.tempPath + '/ts/onejs',
         paths.appPath + '/onejs',
-        paths.testBinPath + '/onejs'
+        paths.testPath + '/onejs'
     ],
     'node_modules/onejs/dist/amd/**/*.js': [
         paths.tempPath + '/ts/onejs',
         paths.appPath + '/onejs',
-        paths.testBinPath + '/onejs'
+        paths.testPath + '/onejs'
     ]
 };
 
@@ -53,7 +51,7 @@ gulp.task('clean-app', function(cb) {
 
 /** Cleans test related files */
 gulp.task('clean-test', function(cb) {
-    del([paths.testBinPath], cb);
+    del([paths.testPath], cb);
 });
 
 /** Runs LESS compiler, CSS to JS, OneJS Compiler and outputs to temp folder */
@@ -79,7 +77,7 @@ gulp.task('tsc', ['tsc-preprocess'], function() {
             module: 'amd',
             target: esTarget
         }))
-        .pipe(gulp.dest(paths.appAmdPath));
+        .pipe(gulp.dest(paths.appPath));
 });
 
 /** Takes the TS from the temp folder and compiles it to CommonJS */
@@ -92,18 +90,7 @@ gulp.task('tsc-commonjs', ['tsc-preprocess'], function() {
             module: 'commonjs',
             target: esTarget
         }))
-        .pipe(gulp.dest(paths.appCommonJsPath))
-        .pipe(gulp.dest(paths.testBinPath));
-});
-
-/** Minifies and gzips your application */
-gulp.task('minify', ['tsc'], function() {
-    return gulp.src([paths.appPath + '/**/*.js'])
-        .pipe(uglify())
-        .pipe(size({
-            gzip: true
-        }))
-        .pipe(gulp.dest(paths.appMinPath));
+        .pipe(gulp.dest(paths.testPath));
 });
 
 /** Copies dependencies */
@@ -122,17 +109,11 @@ gulp.task('copy-deps', ['copy-dts'], function() {
     return stream;
 });
 
-/** Copies the distributable js files of your app into the bin folder */
-gulp.task('copy-dist', ['tsc-commonjs'], function() {
-    return gulp.src(paths.appCommonJsPath + '/*.js')
-        .pipe(gulp.dest('bin/src'));
-});
-
 /** Copies the .d.ts files to the temp folder */
 gulp.task('copy-dts', function() {
     return gulp.src('typings/**/*.d.ts')
         .pipe(gulp.dest(paths.tempPath + '/ts/typings'))
-        .pipe(gulp.dest(paths.testBinPath + '/typings'));
+        .pipe(gulp.dest(paths.testPath + '/typings'));
 });
 
 /** Builds source and test files */
@@ -153,7 +134,7 @@ gulp.task('test-preprocess', ['copy-static-test-files'], function() {
 });
 
 /** Runs the test suite on your test cases */
-gulp.task('test', ['tsc-test'], function (done) {
+gulp.task('test', ['tsc-test'], function(done) {
     karma.start({
         configFile: __dirname + '/karma.conf.js',
         singleRun: true
@@ -162,7 +143,7 @@ gulp.task('test', ['tsc-test'], function (done) {
 
 // karma blocks gulp from exiting without this
 gulp.doneCallback = function(err) {
-    process.exit(err? 1: 0);
+    process.exit(err ? 1 : 0);
 };
 
 /** Copies the static files required for your app */
@@ -176,7 +157,7 @@ gulp.task('copy-static-files', function() {
 /** Copies the static files required for your app */
 gulp.task('copy-static-test-files', function() {
     return gulp.src(paths.staticFiles)
-        .pipe(gulp.dest(paths.testBinPath));
+        .pipe(gulp.dest(paths.testPath));
 });
 
 gulp.task('serve', ['default'], function() {
@@ -185,7 +166,7 @@ gulp.task('serve', ['default'], function() {
 
 /** Watches your source folder for changes and runs the default task */
 gulp.task('watch', function() {
-    gulp.watch('src/**/*', ['default']);
+    return gulp.watch(['src/**/*'], ['default']);
 });
 
-gulp.task('default', ['tsc', 'minify', 'copy-static-files']);
+gulp.task('default', ['tsc', 'copy-static-files']);
