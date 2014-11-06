@@ -1,12 +1,12 @@
 import ViewModel = require('../onejs/ViewModel');
 import List = require('../onejs/List');
 
-class <%= viewName %>Model extends ViewModel {
+class DemoControlModel extends ViewModel {
     /// <summary>
-    /// View model class for defining the observable data contract for the <%= viewName%> view.
-    /// 
+    /// View model class for defining the observable data contract for the DemoControl view.
+    ///
     /// This class is optional and can be removed if unnecessary. Remove the
-    /// js-model attribute from the <%= viewName%>.html template's root element if you do.
+    /// js-model attribute from the DemoControl.html template's root element if you do.
     /// </summary>
 
     exampleMessage = "This is the exampleMessage value in <%= viewName %>Model.ts.";

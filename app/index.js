@@ -44,14 +44,28 @@ var _prompts = {
     generatorType: {
         type: 'list',
         name: 'generatorType',
-        choices: [c_control, c_site, c_test_framework],
+        choices: [
+            {
+                name: "Control - A OneJS control with view, view model, html template, less stylesheet, and test stub",
+                value: c_control
+            },
+            {
+                name: "Site - A brand new OneJS site (base site, test framework, demo control with sample data, gulp file, gitignore)",
+                value: c_site
+            },
+            {
+                name: "Test Framework - Karma test runner with Mocha and Chai libraries",
+                value: c_test_framework
+            }
+        ],
         message: 'What do you want to generate?'
     },
     name: {
         type: 'input',
         name: 'name',
-        message: 'Your OneJS control name (e.g. FavoritesPane)',
-        default: this.appname, // Default to current folder name
+        message: function(answers) {
+            return 'Your OneJS ' + answers.generatorType + ' name';
+        },
         validate: function(input) {
             if (input.replace(/ /g,'') === "") {
                 return false;
@@ -136,13 +150,8 @@ var _scaffold = {
         this.copy(srcPath + '_SiteRootBase.ts', destPath + 'SiteRootBase.ts');
         this.copy(srcPath + '_SiteRootModel.ts', destPath + 'SiteRootModel.ts');
 
-        srcPath = 'src/Site/View/';
-        destPath = viewPath + '/';
-
-        this.template(srcPath + '_View.html', destPath + this.viewName + '.html');
-        this.template(srcPath + '_View.less', destPath + this.viewName + '.less');
-        this.template(srcPath + '_ViewBase.ts', destPath + this.viewName + 'Base.ts');
-        this.template(srcPath + '_ViewModel.ts', destPath + this.viewName + 'Model.ts');
+        // Copy over the Demo Control
+        _demoControl.apply(this);
 
         // Template and copy over the test stub file
         _testStub.apply(this);
@@ -191,7 +200,22 @@ var _testStub = function() {
 
     // Template and copy over the test stub file
     this.template(srcPath + '_Control.test.ts', destPath + this.viewName + '.test.ts');
-}
+};
+
+var _demoControl = function() {
+    var demoControlName = 'DemoControl';
+    var viewPath = 'src/' + demoControlName + '/';
+    var srcPath = 'src/' + demoControlName + '/';
+    var destPath = viewPath + demoControlName;
+
+    this.template(srcPath + 'src/_DemoControl.html', destPath + '.html');
+    this.template(srcPath + 'src/_DemoControl.less', destPath + '.less');
+    this.template(srcPath + 'src/_DemoControlBase.ts', destPath + 'Base.ts');
+    this.template(srcPath + 'src/_DemoControlModel.ts', destPath + 'Model.ts');
+
+    destpath = 'test/' + demoControlName;
+    this.template(srcPath + 'test/_DemoControl.test.ts', destpath + '.test.ts');
+};
 
 var _install = function() {
     var howToInstall =
