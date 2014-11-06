@@ -52,6 +52,12 @@ var _prompts = {
         name: 'name',
         message: 'Your OneJS control name (e.g. FavoritesPane)',
         default: this.appname, // Default to current folder name
+        validate: function(input) {
+            if (input.replace(/ /g,'') === "") {
+                return false;
+            }
+            return true;
+        },
         when: function(answers) {
             // Do not prompt for a name if we're generating a test framework
             return answers.generatorType !== c_test_framework;
