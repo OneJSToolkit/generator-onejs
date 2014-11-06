@@ -5,7 +5,7 @@ var yosay = require('yosay');
 
 // Some consts we'll use throughout the generator
 var c_control = 'control';
-var c_app = 'app';
+var c_site = 'site';
 var c_test_framework = 'testFramework';
 
 var AppGenerator = module.exports = yeoman.generators.Base.extend({
@@ -44,7 +44,7 @@ var _prompts = {
     generatorType: {
         type: 'list',
         name: 'generatorType',
-        choices: [c_control, c_app, c_test_framework],
+        choices: [c_control, c_site, c_test_framework],
         message: 'What do you want to generate?'
     },
     name: {
@@ -68,7 +68,7 @@ var _prompts = {
 var _processCommandLineArguments = function() {
     var prompts = [];
 
-    if (!(this.options[c_control] || this.options[c_app] || this.options[c_test_framework])) {
+    if (!(this.options[c_control] || this.options[c_site] || this.options[c_test_framework])) {
         prompts.push(_prompts.generatorType);
     }
 
@@ -76,8 +76,8 @@ var _processCommandLineArguments = function() {
         this.selectedType = c_control;
     }
 
-    if (this.options[c_app]) {
-        this.selectedType = c_app;
+    if (this.options[c_site]) {
+        this.selectedType = c_site;
     }
 
     if (this.options[c_test_framework]) {
@@ -122,21 +122,21 @@ var _scaffold = {
         // Template and copy over the test stub file
         _testStub.apply(this);
     },
-    app: function() {
+    site: function() {
         this.copy('_index.html', 'index.html');
 
         this.copy('_main.ts', 'src/main.ts');
 
         var viewPath = 'src/' + this.viewName;
-        var srcPath = 'src/App/AppRoot/';
-        var destPath = 'src/AppRoot/';
+        var srcPath = 'src/Site/SiteRoot/';
+        var destPath = 'src/SiteRoot/';
 
-        this.template(srcPath + '_AppRoot.html', destPath + 'AppRoot.html');
-        this.copy(srcPath + '_AppRoot.less', destPath + 'AppRoot.less');
-        this.copy(srcPath + '_AppRootBase.ts', destPath + 'AppRootBase.ts');
-        this.copy(srcPath + '_AppRootModel.ts', destPath + 'AppRootModel.ts');
+        this.template(srcPath + '_SiteRoot.html', destPath + 'SiteRoot.html');
+        this.copy(srcPath + '_SiteRoot.less', destPath + 'SiteRoot.less');
+        this.copy(srcPath + '_SiteRootBase.ts', destPath + 'SiteRootBase.ts');
+        this.copy(srcPath + '_SiteRootModel.ts', destPath + 'SiteRootModel.ts');
 
-        srcPath = 'src/App/View/';
+        srcPath = 'src/Site/View/';
         destPath = viewPath + '/';
 
         this.template(srcPath + '_View.html', destPath + this.viewName + '.html');
