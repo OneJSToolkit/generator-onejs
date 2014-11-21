@@ -1,0 +1,7 @@
+{
+    "name": "onejs-generated-app",
+    "description": "OneJS App generated with generator-onejs",
+    "dependencies": {
+        "onejs": "^1.1.67"
+    }
+}
