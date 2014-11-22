@@ -2,6 +2,7 @@
     "name": "onejs-generated-app",
     "description": "OneJS App generated with generator-onejs",
     "dependencies": {
-        "onejs": "^1.1.67"
+        "onejs": "^1.1.67",
+        "requirejs": "~2.1.15"
     }
 }

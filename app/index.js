@@ -150,6 +150,7 @@ var _scaffold = {
         _gulpfile.apply(this);
         _git.apply(this);
         _package.apply(this);
+        _bower.apply(this);
         _editorConfig.apply(this);
         _testFramework.apply(this);
         _install.apply(this);
@@ -172,6 +173,10 @@ var _package = function() {
     this.template('_package.json', 'package.json');
 };
 
+var _bower = function() {
+    this.template('_bower.json', 'bower.json');
+};
+
 var _editorConfig = function() {
     this.copy('_editorconfig', '.editorconfig');
 };
@@ -179,7 +184,7 @@ var _editorConfig = function() {
 var _testFramework = function() {
     var srcPath = 'src/TestFramework/';
     this.copy(srcPath + '_karma.conf.js', 'karma.conf.js');
-    this.copy('_test_index.ts', 'test/index.ts');
+    this.copy('_test_main.js', 'test-main.js');
     this.copy(srcPath + 'typings/chai/chai.d.ts', 'typings/chai/chai.d.ts');
     this.copy(srcPath + 'typings/mocha/mocha.d.ts', 'typings/mocha/mocha.d.ts');
     this.copy(srcPath + 'typings/tsd.d.ts', 'typings/tsd.d.ts');
@@ -195,7 +200,7 @@ var _testStub = function() {
 
 var _install = function() {
     var howToInstall =
-        '\nAfter running `npm install install`, inject your front end dependencies into' +
+        '\nAfter running `npm install`, inject your front end dependencies into' +
         '\nyour HTML by running:' +
         '\n' +
         chalk.yellow.bold('\n  gulp wiredep\n');
@@ -205,5 +210,6 @@ var _install = function() {
         return;
     }
 
-    this.npmInstall();
+    // Run both npm and bower install
+    this.installDependencies();
 };
